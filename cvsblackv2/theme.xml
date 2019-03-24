@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e107Theme name="BLACKv2" version="2.0.0" date="2019-03-20" compatibility="2.1.7">
+	<author name ="Infade" email="infade@infade.net" url="infade.net" />
+	<summary>BLACKv2 by Infade.net</summary>
+	<description>BLACKv2 by Infade.net</description>
+	<category>generic</category>
+	<keywords>
+		<word>legacy</word>
+		<word>clean</word>
+		<word>community</word>
+	</keywords>
+	<screenshots>
+		<image>preview.jpg</image>
+	</screenshots>
+	<stylesheets>
+		<css file="style.css" name="Default"  />
+	</stylesheets>
+	<layouts>
+		<layout name='default' title='Default layout' default='true'>
+			<custompages>FRONTPAGE</custompages>	
+		</layout>
+		<layout name='full' title='Full layout' default='false'>
+			<custompages>forum.php, forum_viewforum.php, forum_viewtopic.php, forum_post.php, stats.php, faq.php, calendar.php</custompages>	
+		</layout>
+	</layouts>
+</e107Theme>
+ 

@@ -14,7 +14,11 @@
 
 if(!defined("e_THEME")){ exit; }
 // [multilanguage]
-@include_once(e_THEME."alienware/languages/English.php");
+// load translated strings
+e107::lan('theme');
+ 
+ 
+e107::js("theme", "js/alert.js", 'jquery');
 
 // [theme]
 $themename = "BLACKv2";
@@ -33,28 +37,19 @@ define("DREAMDISCLAIMER", "<i>BLACKv2</i> copyright Infade.net 2006 &nbsp;");
 
 // [page defines used for css controll on per page basis]
 define("e_PAGE", substr(strrchr($_SERVER['PHP_SELF'], "/"), 1));
-define("e_PAGECLASS", ereg_replace(substr(strrchr(e_PAGE, "."), 0), "", e_PAGE));
+define("e_PAGECLASS", preg_replace('/'.substr(strrchr(e_PAGE, "."), 0).'/', "", e_PAGE));
 defined("PAGE_NAME") ? PAGE_NAME : define("PAGE_NAME", e_PAGECLASS);
 
 // [navigation] 
-$register_sc[] = 'UL';
+//$register_sc[] = 'UL';
 
 // [layout]
 
 $layout = "_default";
-
-// if the following pages then use the header and footer that follow
-if(
-        eregi(e_PAGE, "forum.php")
-    ||eregi(e_PAGE, "forum_viewforum.php")
-    ||eregi(e_PAGE, "forum_viewtopic.php")
-	||eregi(e_PAGE, "forum_post.php?rp.2")
-	||eregi(e_PAGE, "stats.php")
-    ||eregi(e_PAGE, "faq.php")
-	||eregi(e_PAGE, "calendar.php")
-  )
-{
-$HEADER = "
+$LAYOUT['_header_'] = '';
+$LAYOUT['_footer_'] = '';
+ 
+$HEADER_FULL = "
 <table class='alientable' cellpadding='0' cellspacing='0'>
   <tr>
     <td class='header_left'>&nbsp;</td>
@@ -72,7 +67,7 @@ $HEADER = "
 		{LOGO}
 		</span>
         </div>
-	{UL}
+	{NAVIGATION=main}
       </div>
     </td>
     <td class='header_right'>&nbsp;</td>
@@ -87,7 +82,7 @@ $HEADER = "
             </td>
             <td>";
 
-$FOOTER = "</td>
+$FOOTER_FULL = "</td>
 <td class='right_menu'>
 		{MENU=2}
             </td>
@@ -123,11 +118,11 @@ $FOOTER = "</td>
 
 
 // otherwise, use the following default header and footer
-}else{
+ 
 // Default Header and Footer -----------------------------------------------------------
 
 
-$HEADER = "
+$HEADER_DEFAULT = "
 <table class='alientable' cellpadding='0' cellspacing='0'>
   <tr>
     <td class='header_left'>&nbsp;</td>
@@ -145,7 +140,7 @@ $HEADER = "
 		{LOGO}
 		</span>
         </div>
-	{UL}
+	{NAVIGATION=main}
       </div>
     </td>
     <td class='header_right'>&nbsp;</td>
@@ -160,7 +155,7 @@ $HEADER = "
             </td>
             <td>";
 
-$FOOTER = "
+$FOOTER_DEFAULT = "
 			<td class='right_menu'>
 		{MENU=2}
             </td>
@@ -193,11 +188,12 @@ $FOOTER = "
     <td class='footer_right'>&nbsp;</td>
   </tr>
 </table>";
-}
+ 
 
 
 
-
+$LAYOUT['default'] =  $HEADER_DEFAULT.'{---}'.$FOOTER_DEFAULT;
+$LAYOUT['full'] =  $HEADER_FULL.'{---}'.$FOOTER_FULL;
 
 
 // [newsstyle]
@@ -216,7 +212,7 @@ $NEWSSTYLE = "<h3>
 on
 {NEWSDATE}
 <br />
-<img src='".e_IMAGE."admin_images/userclass_16.png' alt='' style='vertical-align: middle;' />
+<img src='".e_IMAGE_ABS."admin_images/userclass_16.png' alt='' style='vertical-align: middle;' />
 {NEWSCOMMENTS} {TRACKBACK}
 </div>
 <br />
